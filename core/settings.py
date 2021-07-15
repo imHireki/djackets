@@ -28,6 +28,9 @@ INSTALLED_APPS = [
 
     # djoser
     'djoser',
+
+    # apps
+    'apps.product',
 ]
 
 # Frontend address
