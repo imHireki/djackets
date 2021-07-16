@@ -1,21 +1,19 @@
-from django.contrib import admin
+# Django url settings
 from django.urls import path, include
 
-"""
-TODO: MAYBE IT'LL NEED :
+# Admin area
+from django.contrib import admin
 
-Add rest_framework.authentication.TokenAuthentication
-to Django REST Framework authentication strategies tuple:
+# Media
+from django.conf.urls.static import static
+from django.conf import settings
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        (...)
-    ),
- }
-"""
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('djoser.urls')),
     path('api/v1/', include('djoser.urls.authtoken')),
 ]
+
+# Serving files uploaded by a user during development
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
