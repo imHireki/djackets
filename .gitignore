@@ -1,5 +1,4 @@
 steps.*
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -112,6 +111,6 @@ media/
 # Ignore Django Migrations in Development if you are working on team
 
 # Only for Development only
-**/migrations/**
+**/amigrations/**
 !**/migrations
 !**/migrations/__init__.py
