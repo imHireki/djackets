@@ -1,9 +1,8 @@
 # Django
 from django.db import models
-from django.core.files import File
-from django.db import models
 
 # Image Resizing
+from django.core.files import File
 from PIL import Image
 from io import BytesIO
 
@@ -33,7 +32,7 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField()
     description = models.TextField(blank=True, null=True)
-    prince = models.DecimalField(max_digits=6, decimal_places=2)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
     image = models.ImageField(
         upload_to='uploads/', blank=True, null=True
     )
@@ -73,7 +72,7 @@ class Product(models.Model):
 
     def make_thumbnail(self, image, size=(300, 200)):
         """ 
-        Make thumbnail when `self.get_thumbnail` is called
+        Make thumbnail if `self.get_thumbnail` is called
         and there's no thumbnail already setted on the object
         """
         img = Image.open(image)
