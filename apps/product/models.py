@@ -46,6 +46,9 @@ class Product(models.Model):
     
     def __str__(self):
         return self.name
+
+    def get_category_name(self):
+        return self.category.name
         
     def get_absolute_url(self):
         """ Simple way to get the product's url """

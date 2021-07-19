@@ -15,14 +15,11 @@ from rest_framework.routers import DefaultRouter
 from apps.product import viewsets
 
 
-router = DefaultRouter()
-router.register(r'latest-products', viewsets.LatestProductsViewSet)
-
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # Router
-    path('api/v1/', include(router.urls)),
+    # Product
+    path('api/v2/', include('apps.product.urls')),
 
     # Djoser
     path('api/v1/', include('djoser.urls')),
