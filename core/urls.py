@@ -1,5 +1,7 @@
 """
-URL configuration
+URL settings for project's root
+
+The `urlpatterns` list routes URLs to views
 """
 
 # Django
@@ -8,20 +10,17 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-# Django Rest Framework
-from rest_framework.routers import DefaultRouter
-
 # Apps
 from apps.product import viewsets
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
+    # Project apps
+    path('api/v1/', include('apps.product.urls')),
 
-    # Product
-    path('api/v2/', include('apps.product.urls')),
-
-    # Djoser
+    # Djoser users and authw
     path('api/v1/', include('djoser.urls')),
     path('api/v1/', include('djoser.urls.authtoken')),
 ]

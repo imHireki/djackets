@@ -1,4 +1,9 @@
+"""
+Category and Product Models
+"""
+
 # Django
+from core.settings import BASE_HOST_URL
 from django.db import models
 
 # Image Resizing
@@ -47,29 +52,30 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-    def get_category_name(self):
-        return self.category.name
-        
+    def get_obj_url(self):
+        """ Get URL to the object """
+        return f'{BASE_HOST_URL}/api/v1/products' + self.get_absolute_url()
+    
     def get_absolute_url(self):
-        """ Simple way to get the product's url """
+        """ Get product's URL with it's respective category """
         return f'/{self.category.slug}/{self.slug}/'
 
     def get_image(self):
-        """ Simple way to get the product's image, if there's one """
+        """ Get URL to product's image """
         if self.image:
-            return 'http://127.0.0.1:8000' + self.image.url
+            return BASE_HOST_URL + self.image.url
         return ''
     
     def get_thumbnail(self):
-        """ Simple way to get the thumbnail """
+        """ Get URL to thumbnail or make one """
         if self.thumbnail:
-            return 'http://127.0.0.1:8000' + self.thumbnail.url
+            return BASE_HOST_URL + self.thumbnail.url
         else:
             if self.image:
                 self.thumbnail = self.make_thumbnail(self.image)
                 self.save()
 
-                return 'http://127.0.0.1:8000' + self.thumbnail.url
+                return BASE_HOST_URL + self.thumbnail.url
             else:
                 return ''
 
