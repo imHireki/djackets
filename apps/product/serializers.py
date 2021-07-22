@@ -9,7 +9,7 @@ CategorySerializer for Category model
 from rest_framework import serializers
 
 # Product app
-from .models import Product
+from .models import Product, Category
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -22,10 +22,25 @@ class ProductSerializer(serializers.ModelSerializer):
             'get_obj_url',
             'id',
             'name',
+            'get_absolute_url',
             'description',
             'price',
-            'category',
-            'get_absolute_url',
+            # 'category',
             'get_image',
             'get_thumbnail',
+        ]
+
+class CategorySerializer(serializers.ModelSerializer):
+    """
+    Serializer for Category Model
+    """
+    products = ProductSerializer(many=True)
+
+    class Meta:
+        model = Category
+        fields = [
+            'id',
+            'name',
+            'get_absolute_url',
+            'products'
         ]

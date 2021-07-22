@@ -4,6 +4,7 @@ URL settings for product app
 
 # Django
 from django.urls import path, include
+from rest_framework import urlpatterns
 
 # Django Rest Framework
 from rest_framework.routers import DefaultRouter
@@ -11,13 +12,14 @@ from rest_framework.routers import DefaultRouter
 # Product app
 from . import viewsets
 
+r = DefaultRouter()
+r.register(r'products', viewsets.ProductList)
 
-router = DefaultRouter()
-router.register(r'products', viewsets.ProductListDetail)
- 
-urlpatterns = router.urls
+urlpatterns = r.urls
 
 urlpatterns += [
+    # path('products/', viewsets.ProductList.as_view()),
     path('products/<slug:category_slug>/<slug:product_slug>/',
-    viewsets.ProductDetail.as_view())
+    viewsets.ProductDetail.as_view()),
+    path('products/<slug:category_slug>/', viewsets.CategoryDetail.as_view()),
 ]

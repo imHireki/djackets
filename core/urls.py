@@ -16,13 +16,14 @@ from apps.product import viewsets
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
+
     # Project apps
     path('api/v1/', include('apps.product.urls')),
 
-    # Djoser users and authw
+    # Djoser users and auth
     path('api/v1/', include('djoser.urls')),
     path('api/v1/', include('djoser.urls.authtoken')),
+
 ]
 
 # Media files
