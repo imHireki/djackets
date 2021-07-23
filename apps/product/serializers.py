@@ -34,7 +34,6 @@ class CategorySerializer(serializers.ModelSerializer):
     """
     Serializer for Category Model
     """
-    products = ProductSerializer(many=True)
 
     class Meta:
         model = Category
@@ -42,5 +41,5 @@ class CategorySerializer(serializers.ModelSerializer):
             'id',
             'name',
             'get_absolute_url',
-            'products'
+            'products',
         ]

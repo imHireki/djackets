@@ -26,8 +26,8 @@ class Category(models.Model):
     def get_absolute_url(self):
         # Simple way to get category's url
         return f'/{self.slug}/'
-
-
+    
+    
 class Product(models.Model):
     category = models.ForeignKey(
         to=Category,
