@@ -30,11 +30,11 @@ class ProductSerializer(serializers.ModelSerializer):
             'get_thumbnail',
         ]
 
+
 class CategorySerializer(serializers.ModelSerializer):
     """
     Serializer for Category Model
     """
-
     class Meta:
         model = Category
         fields = [

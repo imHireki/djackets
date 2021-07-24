@@ -3,7 +3,7 @@ URL settings for product app
 """
 
 # Django
-from django.urls import path, include
+from django.urls import path
 
 # Django Rest Framework
 from rest_framework.routers import DefaultRouter
@@ -12,25 +12,29 @@ from rest_framework.routers import DefaultRouter
 from . import viewsets
 
 
-# Registering routing to Lists
-router = DefaultRouter()
-router.register(r'products', viewsets.ProductList)
-router.register(r'categories', viewsets.CategoryList)
-
-# Routing Lists
-urlpatterns = router.urls
-
-# Routing Details
-urlpatterns += [
+urlpatterns = [
+    
+    # URLs for Products
+    path(
+        'products/',
+        viewsets.ProductList.as_view()
+    ),
     path(
         'products/<slug:category_slug>/<slug:product_slug>/',
         viewsets.ProductDetail.as_view()
     ),
+
+    # NOTE: Careful when dealing with URLs alike each other
+    # To reference the static URL before the one with a slug.
+    path(
+        'products/search/',
+        viewsets.Search.as_view()
+    ),
+
+    # URLs for Categories
     path(
         'products/<slug:category_slug>/',
         viewsets.CategoryDetail.as_view()
     ),
-    path(
-        'products/search/', viewsets.search
-    ),
+
 ]

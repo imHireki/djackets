@@ -8,16 +8,17 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 
 # Django Rest Framework
-from rest_framework import viewsets, generics
+from rest_framework import viewsets, generics, views
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
 
 # Product app
 from .serializers import ProductSerializer, CategorySerializer
 from .models import Product, Category
 
 
-class ProductList(generics.ListAPIView, viewsets.GenericViewSet):
+class ProductList(generics.ListAPIView):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()[0:4]
 
@@ -38,11 +39,6 @@ class ProductDetail(generics.RetrieveAPIView):
         return Response(serializer.data)
 
 
-class CategoryList(viewsets.GenericViewSet, generics.ListAPIView):
-    serializer_class = CategorySerializer
-    queryset = Category.objects.all()
-    
-
 class CategoryDetail(generics.RetrieveAPIView):
     serializer_class = CategorySerializer
     
@@ -58,17 +54,22 @@ class CategoryDetail(generics.RetrieveAPIView):
         return Response(serializer.data)
 
 
-@api_view(['POST'])
-def search(request):
-    query = request.data.get('query', '')
+class Search(generics.CreateAPIView):
+    serializer_class = ProductSerializer
 
-    if query:
-        products = Product.objects.filter(
-            Q(name__icontains=query) |
-            Q(description__icontains=query) 
-        )
-        serializer = ProductSerializer(products, many=True)
-        return Response(serializer.data)
-    else:
-        return Response({"products": []})
+    def create(self, format=None, *args, **kwargs):
+        """
+        Receive a POST request, try find related objects in db
+        return 'em as serialized objects
+        """
+        query = self.request.data.get('query', '')
+
+        if not query:
+            return Response({'products': ''}, status=status.HTTP_404_NOT_FOUND)
         
+        query_obj = Product.objects.filter(
+            Q(name__icontains=query) | Q(description__icontains=query)
+        )
+        serialized_obj = self.serializer_class(query_obj, many=True)
+
+        return Response(serialized_obj.data, status=status.HTTP_201_CREATED)
