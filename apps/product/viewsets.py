@@ -12,6 +12,7 @@ from rest_framework import viewsets, generics, views
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework.serializers import Serializer
 
 # Product app
 from .serializers import ProductSerializer, CategorySerializer
@@ -56,8 +57,8 @@ class CategoryDetail(generics.RetrieveAPIView):
 
 class Search(generics.CreateAPIView):
     serializer_class = ProductSerializer
-
-    def create(self, format=None, *args, **kwargs):
+    
+    def create(self, request):
         """
         Receive a POST request, try find related objects in db
         return 'em as serialized objects
@@ -65,11 +66,11 @@ class Search(generics.CreateAPIView):
         query = self.request.data.get('query', '')
 
         if not query:
-            return Response({'products': ''}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'products': ''}, status.HTTP_204_NO_CONTENT)
         
-        query_obj = Product.objects.filter(
+        queryset = Product.objects.filter(
             Q(name__icontains=query) | Q(description__icontains=query)
         )
-        serialized_obj = self.serializer_class(query_obj, many=True)
-
-        return Response(serialized_obj.data, status=status.HTTP_201_CREATED)
+        serializer = self.get_serializer(queryset, many=True)
+        
+        return Response(serializer.data, status.HTTP_201_CREATED)
