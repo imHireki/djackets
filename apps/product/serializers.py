@@ -35,6 +35,8 @@ class CategorySerializer(serializers.ModelSerializer):
     """
     Serializer for Category Model
     """
+    products = ProductSerializer(many=True)
+    
     class Meta:
         model = Category
         fields = [
