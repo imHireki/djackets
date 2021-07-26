@@ -13,7 +13,17 @@ from . import viewsets
 
 
 urlpatterns = [
-    
+    # NOTE: Careful when dealing with URLs alike each other
+    # To reference the static URL before the one with a slug.
+    path(
+        'products/Search/',
+        viewsets.Search.as_view()
+    ),
+    path(
+        'products/AddToCart/',
+        viewsets.AddToCart.as_view()
+    ),
+
     # URLs for Products
     path(
         'products/',
@@ -22,13 +32,6 @@ urlpatterns = [
     path(
         'products/<slug:category_slug>/<slug:product_slug>/',
         viewsets.ProductDetail.as_view()
-    ),
-
-    # NOTE: Careful when dealing with URLs alike each other
-    # To reference the static URL before the one with a slug.
-    path(
-        'products/search/',
-        viewsets.Search.as_view()
     ),
 
     # URLs for Categories
