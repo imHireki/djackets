@@ -10,6 +10,7 @@ from django.db.models import Q
 # Django Rest Framework
 from rest_framework import viewsets, generics, views
 from rest_framework.response import Response
+from rest_framework import exceptions
 from rest_framework import status
 
 # Product app
@@ -69,7 +70,7 @@ class Search(views.APIView):
         queryset, query = self.get_queryset()
 
         if not queryset or not query:
-            return Response([], status=status.HTTP_404_NOT_FOUND)
+            raise exceptions.NotFound
         
         serializer = ProductSerializer(queryset, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
@@ -91,7 +92,8 @@ class AddToCart(views.APIView):
     """
     def get(self, *args, **kwargs): 
         p_id = self.request.GET.get('pid', '')
-        if not p_id: return Response([], status.HTTP_404_NOT_FOUND)
+        if not p_id:
+            raise exceptions.NotFound
 
         product = get_object_or_404(Product, id=p_id)
 
