@@ -135,3 +135,48 @@ class AddToCart(views.APIView):
             cart[p_id]['amount'] += 1
             new_amount = cart[p_id]['amount']
             cart[p_id]['sum_items'] = price * new_amount
+
+
+class RemoveFromCart(views.APIView):
+    """
+    Remove from cart function that receives a POST with the `pid`
+
+    Return a Response with the `serialized cart`
+    """
+    def post(self, *args, **kwargs):
+        p_id = self.request.data.get('pid')
+        if not p_id:
+            raise exceptions.ParseError("'pid' must be sent")
+
+        cart = self.get_cart()
+        if not cart:
+            raise exceptions.ParseError("'cart' must be on session")
+
+        product = self.get_object(p_id) 
+        if not product:
+            raise exceptions.NotFound('invalid "pid"')
+        
+        if not p_id in cart:
+            raise exceptions.NotFound("invalid 'pid' for user's 'cart'")
+
+        self.remove_from_cart(cart, p_id)
+        return Response(cart, status=status.HTTP_200_OK)
+
+    def get_cart(self):
+        """ Get cart """
+        return self.request.session.get('cart')
+    
+    def get_object(self, p_id):
+        """ Get product object """
+        return Product.objects.filter(id=p_id).first()
+
+    def remove_from_cart(self, cart, p_id):
+        """ Remove `pid` from `cart` or adjust `amount` and `sum_items` """
+        if cart[p_id]['amount'] == 1:  del cart[p_id]
+        else:
+            cart[p_id]['amount'] -= 1
+
+            price = cart[p_id]['price']
+            cart[p_id]['sum_items'] = price * cart[p_id]['amount']
+
+        self.request.session.save()

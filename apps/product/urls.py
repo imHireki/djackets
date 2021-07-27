@@ -23,6 +23,10 @@ urlpatterns = [
         'products/AddToCart/',
         viewsets.AddToCart.as_view()
     ),
+    path(
+        'products/RemoveFromCart/',
+        viewsets.RemoveFromCart.as_view()
+    ),
 
     # URLs for Products
     path(
