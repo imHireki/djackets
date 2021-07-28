@@ -11,14 +11,14 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 # Apps
-from apps.product import viewsets
+from apps.product import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Project apps
-    path('api/v1/', include('apps.product.urls')),
+    path('api/v1/products/', include('apps.product.urls')),
 
     # Djoser users and auth
     path('api/v1/', include('djoser.urls')),

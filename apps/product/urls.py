@@ -9,39 +9,25 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 # Product app
-from . import viewsets
+from .views import functions as func, generics as generics
 
 
 urlpatterns = [
-    # NOTE: Careful when dealing with URLs alike each other
-    # To reference the static URL before the one with a slug.
-    path(
-        'products/Search/',
-        viewsets.Search.as_view()
-    ),
-    path(
-        'products/AddToCart/',
-        viewsets.AddToCart.as_view()
-    ),
-    path(
-        'products/RemoveFromCart/',
-        viewsets.RemoveFromCart.as_view()
-    ),
+
+    # URLs for Functions
+    path('Search/', func.SearchProducts.as_view()),
+    path('AddToCart/', func.AddToCart.as_view()),
+    path('DecreaseFromCart/', func.DecreaseOrDeleteFromCart.as_view()),
+    path('DeleteFromCart/', func.DeleteFromCart.as_view()),
+
+    # URLs for Cart
+    path('cart/', generics.Cart.as_view()),
 
     # URLs for Products
-    path(
-        'products/',
-        viewsets.ProductList.as_view()
-    ),
-    path(
-        'products/<slug:category_slug>/<slug:product_slug>/',
-        viewsets.ProductDetail.as_view()
-    ),
+    path('', generics.ProductList.as_view()),
+    path('<slug:category_slug>/<slug:product_slug>/',
+        generics.ProductDetail.as_view()),
 
     # URLs for Categories
-    path(
-        'products/<slug:category_slug>/',
-        viewsets.CategoryDetail.as_view()
-    ),
-
+    path('<slug:category_slug>/', generics.CategoryDetail.as_view()),
 ]
