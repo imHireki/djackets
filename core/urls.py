@@ -17,12 +17,12 @@ from apps.product import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # Project apps
-    path('api/v1/products/', include('apps.product.urls')),
-
     # Djoser users and auth
     path('api/v1/', include('djoser.urls')),
     path('api/v1/', include('djoser.urls.authtoken')),
+
+    # Project apps
+    path('api/v1/products/', include('apps.product.urls')),
 
 ]
 
