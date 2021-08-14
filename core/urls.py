@@ -23,7 +23,7 @@ urlpatterns = [
 
     # Project apps
     path('api/v1/products/', include('apps.product.urls')),
-
+    path('api/v1/order/', include('apps.order.urls')),
 ]
 
 # Media files

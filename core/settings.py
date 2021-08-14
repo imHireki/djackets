@@ -4,6 +4,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-mzy_)v0nl8_!7g49$^2)y(-2lzwa1o+h+64q!)8n$h0@4bkjf3'
 
+STRIPE_SECRET_KEY = 'sk_test_51JNkz4JpXdHYciG7oC47DKdmj5NXrjb08YE8xI6L2HtIGL58AjiInmOfZbQJkd5oAYtA24s7X0nm1CFOkjl16Rpj00nl8eiz9t'
+
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -17,19 +19,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # django rest framework
+    # Packages
     'rest_framework',
     'rest_framework.authtoken',
-
-    # django cors headers
     'corsheaders',
-
-    # djoser
     'djoser',
 
-    # apps
+    # Apps
     'apps.product',
-    'apps.user',
+    'apps.order',
 ]
 
 # Frontend address
@@ -105,8 +103,3 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-SESSION_COOKIE_AGE = 604800
-SESSION_SAVE_EVERY_REQUEST = False
-
-AUTH_USER_MODEL = 'user.User'

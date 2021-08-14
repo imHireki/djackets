@@ -51,10 +51,6 @@ class Product(models.Model):
     
     def __str__(self):
         return self.name
-
-    def get_obj_url(self):
-        """ Get URL to the object """
-        return f'{BASE_HOST_URL}/api/v1/products' + self.get_absolute_url()
     
     def get_absolute_url(self):
         """ Get product's URL with it's respective category """

@@ -19,7 +19,6 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'get_obj_url',
             'id',
             'name',
             'get_absolute_url',
