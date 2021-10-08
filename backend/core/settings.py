@@ -25,13 +25,16 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'djoser',
+
+    # Apps
+    'apps.product',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
 
-    # Cors Header
+    # Cors Headers
     'corsheaders.middleware.CorsMiddleware',
 
     'django.middleware.common.CommonMiddleware',
