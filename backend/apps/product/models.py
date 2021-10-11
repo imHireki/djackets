@@ -52,7 +52,7 @@ class Product(models.Model):
             return 'http://127.0.0.1:8000' + self.image.url
         return ''
 
-    def get_thumbnal(self):
+    def get_thumbnail(self):
         if self.thumbnail:
             return 'http://127.0.0.1:8000' + self.thumbnail.url
         else:
@@ -66,7 +66,7 @@ class Product(models.Model):
 
     def make_thumbnail(self, image, size=(300, 200)):
         img = Image.open(image)
-        img.convert('RGB')
+        img = img.convert('RGB')
         img.thumbnail(size)
 
         thumb_io = BytesIO()
