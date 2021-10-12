@@ -60,6 +60,8 @@ export default {
         .get(`/api/v1/products/${category_slug}/${product_slug}/`)
         .then(response => {
           this.product = response.data
+
+          document.title = this.product.name + ' | Djackets' // Page title
         })
         .catch(error => {
           console.log(error);
