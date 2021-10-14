@@ -9,7 +9,7 @@ from .models import Product, Category
 
 
 class LatestProductList(APIView):
-    def get(self, *args, **kwargs):
+    def get(self, request, format=None):
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
@@ -24,7 +24,7 @@ class ProductDetail(APIView):
         except Product.DoesNotExist:
             raise Http404
  
-    def get(self, request, category_slug, product_slug, *args, **kwargs):
+    def get(self, request, category_slug, product_slug, format=None):
         product = self.get_object(category_slug, product_slug)
         serializer = ProductSerializer(product)
         return Response(serializer.data)
@@ -37,14 +37,14 @@ class CategoryDetail(APIView):
         except Category.DoesNotExist:
             raise Http404
 
-    def get(self, request, category_slug, *args, **kwargs):
+    def get(self, request, category_slug, format=None):
         category = self.get_object(category_slug)
         serializer = CategorySerializer(category)
         return Response(serializer.data)
 
 
 class Search(APIView):
-    def post(self, *args, **kwargs):
+    def post(self, request, format=None):
         query = self.request.data.get('query', '')
 
         if query:
