@@ -50,7 +50,6 @@ export default {
   methods: {
     async performSearch() {
       this.$store.commit('setIsLoading', true)
-      console.log(this.query)
 
       await axios
         .post('/api/v1/products/search/', {'query': this.query })
