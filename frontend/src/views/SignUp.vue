@@ -85,6 +85,8 @@ export default {
 
   methods: {
     submitForm() {
+      this.errors = []
+
       if (this.username === '') {
         this.errors.push('The username is missing')
       } 
@@ -118,15 +120,14 @@ export default {
 
             this.$router.push('/log-in')
           })
+
           .catch(error => {
             if (error.response) {
               for (const property in error.response.data) {
-                this.errors.push(`${property}: ${error.response.data[property]}`)            
+                this.errors.push(`${property}: ${error.response.data[property]}`)
               }
-              console.log(JSON.stringify(error.response.data))
-
             } else if (error.message) {
-              this.errors.push('Something went wrong. Please try again')
+              this.errors.push('Something went wrong. Please, try again.')
               console.log(JSON.stringify(error))
             }
           })
