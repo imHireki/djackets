@@ -19,7 +19,7 @@
 
 
           <div class="field">
-            <label>password</label>
+            <label>Password</label>
             <div class="control">
               <input
                 type="password"
