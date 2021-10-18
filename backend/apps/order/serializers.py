@@ -4,6 +4,38 @@ from apps.product.serializers import ProductSerializer
 from .models import Order, OrderItem
 
 
+class MyOrderItemSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
+    
+    class Meta:
+        model = OrderItem
+        fields = (
+            'price',
+            'product',
+            'quantity',
+            )
+
+
+class MyOrderSerializer(serializers.ModelSerializer):
+    items = MyOrderItemSerializer(many=True)
+
+    class Meta:
+        model = Order
+        fields = (
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+            'address',
+            'zipcode',
+            'place',
+            'phone',
+            'stripe_token',
+            'items',
+            'paid_amount',
+            )
+
+
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
@@ -12,6 +44,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             'product',
             'quantity',
             )
+
 
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
