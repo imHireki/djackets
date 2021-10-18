@@ -9,6 +9,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = get_secret('SECRET_KEY')
 
+STRIPE_SECRET_KEY = get_secret('STRIPE_SECRET_KEY')
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -29,6 +31,7 @@ INSTALLED_APPS = [
 
     # Apps
     'apps.product',
+    'apps.order',
 ]
 
 MIDDLEWARE = [
